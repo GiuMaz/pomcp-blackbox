@@ -133,6 +133,9 @@ public:
     double GetRewardRange() const { return RewardRange; }
     void SetRewardRange(double r) { RewardRange = r; }
     double GetHorizon(double accuracy, int undiscountedHorizon = 100) const;
+    void set_seed(size_t s) {
+        random_state.seed(s);
+    }
     
 protected:
 

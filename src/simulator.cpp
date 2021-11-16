@@ -1,4 +1,5 @@
 #include "simulator.h"
+#include <random>
 
 using namespace std;
 using namespace UTILS;
@@ -21,14 +22,17 @@ SIMULATOR::SIMULATOR()
 :   Discount(1.0),
     NumActions(0),
     NumObservations(0),
-    RewardRange(1.0)
+    RewardRange(1.0),
+    random_state(std::random_device{}())
+
 {
 }
 
 SIMULATOR::SIMULATOR(int numActions, int numObservations, double discount)
 :   NumActions(numActions),
     NumObservations(numObservations),
-    Discount(discount)
+    Discount(discount),
+    random_state(std::random_device{}())
 { 
     assert(discount > 0 && discount <= 1);
 }

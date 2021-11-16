@@ -40,6 +40,7 @@ int main(int argc, char* argv[])
     double smarttreevalue = 1.0;
 
     double RewardRange = 52.0;
+    size_t seed = 0;
 
     std::vector<double> belief;
     std::vector<int> pos;
@@ -52,6 +53,7 @@ int main(int argc, char* argv[])
         ("belief", value<vector<double>>(&belief)->multitoken(), "belief velocity regulation (probability distribution over 81 states)")
         ("pos", value<vector<int>>(&pos)->multitoken(), "segment and subsegment")
         ("W", value<double>(&RewardRange), "set reward range (W)")
+        ("seed", value<size_t>(&seed), "set seed")
         //("runs", value<int>(&expParams.NumRuns), "number of runs")
         //("test", "run unit tests")
         //("problem", value<string>(&problem), "problem to run")
@@ -126,6 +128,10 @@ int main(int argc, char* argv[])
     auto real = std::make_unique<OBSTACLEAVOIDANCE>(map, prob_collision_map);
     auto simulator = std::make_unique<OBSTACLEAVOIDANCE>(
         map, prob_collision_map, pos[0], pos[1], belief);
+
+    if (vm.count("seed")) {
+        simulator->set_seed(seed);
+    }
 
     if (vm.count("W")) {
         real->SetRewardRange(RewardRange);

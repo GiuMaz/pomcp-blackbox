@@ -36,7 +36,6 @@ OBSTACLEAVOIDANCE::OBSTACLEAVOIDANCE(std::vector<std::vector<double>> map,
     : nSubSegs(), subSegLengths(map), nDifficultyValues(3), nVelocityValues(3),
       nSeg(map.size()), unif_dist(0.0, 1.0), prob_collision_map(prob_col),
       has_initial_distr(true),
-
       initial_seg(seg), initial_subseg(subseg), initial_belief(bel) {
   // store number of subsegments in each segment
   for (const auto &s : map)
@@ -108,14 +107,15 @@ STATE* OBSTACLEAVOIDANCE::CreateStartState() const
         if (state_pos >= 81)
             state_pos = 80; // force last state
 
+        int maxexp = 1;
+        for (int i = 0; i < (nSeg-1); ++i)
+            maxexp *=3;
+
         for (int i = 0; i < nSeg; ++i) {
-            int exp = 1;
-            for (int j = 0; j < i; j++)
-                exp *= 3;
-            int diff = (state_pos / exp) % nDifficultyValues;
+            int diff = (state_pos / maxexp) % nDifficultyValues;
+            maxexp /= 3;
             bmState->segDifficulties.push_back(diff);
         }
-
     } else {
         int rnd;
         for (int i = 0; i < nSeg; ++i) {
