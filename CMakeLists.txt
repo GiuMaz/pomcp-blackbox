@@ -26,3 +26,24 @@ add_executable(pomcp
     )
 target_include_directories(pomcp PUBLIC ./src)
 target_link_libraries(pomcp LINK_PUBLIC ${Boost_LIBRARIES})
+
+add_executable(twoacts
+    ./src/battleship.cpp
+    ./src/beliefstate.cpp
+    ./src/coord.cpp
+    ./src/experiment.cpp
+    ./src/twoacts.cpp
+    ./src/mcts.cpp
+    ./src/network.cpp
+    ./src/node.cpp
+    ./src/pocman.cpp
+    ./src/rocksample.cpp
+    ./src/simulator.cpp
+    ./src/tag.cpp
+    ./src/testsimulator.cpp
+    ./src/utils.cpp
+    ./src/obstacleavoidance.cpp
+    ./src/obstacleavoidance2.cpp
+    )
+target_include_directories(twoacts PUBLIC ./src)
+target_link_libraries(twoacts LINK_PUBLIC ${Boost_LIBRARIES})
